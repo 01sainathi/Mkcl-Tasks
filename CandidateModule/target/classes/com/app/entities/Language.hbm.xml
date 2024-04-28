@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.app.entities">
+	<class name="Language" table="LANGUAGE">
+		<id name="pid" column="PID">
+			<generator class="native"/>
+		</id>
+		<property name="name" column="NAME"></property>
+		<property name="cid" column="CID"></property>
+		
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.app.models">
+	<class name="NaturalLanguage" table="NATURALLANGUAGE">
+		<id name="id" column="ID" type="string"/>
+		<property name="languageName" column="LANGUAGENAME"/>
+		<property name="nativeName" column="NATIVENAME"/>
+		<property name="isoCode" column="ISOCODE"/>
+	</class>
+</hibernate-mapping>

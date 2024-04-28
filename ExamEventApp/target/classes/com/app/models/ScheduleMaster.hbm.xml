@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.app.models">
+	<class name="ScheduleMaster" table="SCHEDULEMASTER">
+		<id name="scheduleID" column="SCHEDULEID">
+			<generator class="identity"/>
+		</id>
+		<property name="scheduleName" column="SCHEDULENAME"/>
+		<property name="scheduleStart" column="SCHEDULESTART"/>
+		<property name="scheduleEnd" column="SCHEDULEEND"/>
+		<property name="isActiveSchedule" column="ISACTIVESCHEDULE"/>
+		<property name="createdBy" column="CREATEDBY"/>
+		<property name="dateCreated" column="DATECREATED"/>
+		<property name="modifiedBy" column="MODIFIEDBY"/>
+		<property name="dateModified" column="DATEMODIFIED"/>
+		<property name="fkExamEventID" column="FKEXAMEVENTID"/>
+		<property name="deleted" column="DELETED"/>
+		<property name="scheduleType" column="SCHEDULETYPE"/>
+		<property name="allowScheduleExtension" column="ALLOWSCHEDULEEXTENSION"/>
+		<property name="maxNumberOfPapers" column="MAXNUMBEROFPAPERS"/>
+		
+	</class>
+</hibernate-mapping>

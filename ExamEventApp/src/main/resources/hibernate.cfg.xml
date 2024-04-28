@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-configuration SYSTEM "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+	
+		<property name="connection.url">jdbc:mysql://10.2.10.57/PROJECT_TRAINEE_2024?useUnicode=true&amp;characterEncoding=utf-8</property>
+		<property name="connection.username">pta2024</property>
+		<property name="connection.password">pta2024</property>
+		
+		
+		<property name="show_sql">true</property>
+		<property name="generate_statistics">true</property>
+		<property name="current_session_context_class">thread</property>
+		<!-- <property name="hbm2ddl.auto">update</property> -->
+		<property name="hibernate.connection.useUnicode">true</property>
+		<property name="hibernate.connection.characterEncoding">UTF-8</property>
+		<property name="hibernate.connection.charSet">UTF-8</property>
+		<property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+
+		<property name="c3p0.autoCommitOnClose">false</property>
+		<property name="c3p0.breakAfterAcquireFailure">false</property>
+		<property name="c3p0.acquireRetryDelay">1000</property>
+		<property name="c3p0.idleConnectionTestPeriod">1800</property>
+		<property name="c3p0.acquireRetryAttempts">10</property>
+		<property name="c3p0.maxStatementsPerConnection">0</property>
+		<property name="c3p0.testConnectionOnCheckout">true</property>
+		<property name="c3p0.acquireIncrement">5</property>
+		<property name="c3p0.testConnectionOnCheckin">true</property>
+		<property name="c3p0.maxIdleTime">2400</property>
+		<property name="c3p0.minPoolSize">1</property>
+		<property name="c3p0.maxPoolSize">100</property>
+ 		<property name="c3p0.maxStatements">0</property>
+		<property name="c3p0.initialPoolSize">2</property>
+		<property name="c3p0.numHelperThreads">5</property>
+
+		<!--oesserver-SERVER mapping files -->
+		<mapping resource="com/app/models/ExamEvent.hbm.xml"/>
+		<mapping resource="com/app/models/Paper.hbm.xml"/>
+        <mapping resource="com/app/models/NaturalLanguage.hbm.xml"/>
+        <mapping resource="com/app/models/SchedulePaperAssociation.hbm.xml"/>
+        <mapping resource="com/app/models/ExamEventPaperDetails.hbm.xml"/>
+        <mapping resource="com/app/models/ScheduleMaster.hbm.xml"/>
+		
+	</session-factory>
+</hibernate-configuration>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.app.models">
+	<class name="Paper" table="PAPER">
+		<id name="paperID" column="PAPERID">
+			<generator class="identity"/>
+		</id>
+		<property name="fkClientID" column="FKCLIENTID"/>
+		<property name="code" column="CODE"/>
+		<property name="name" column="NAME"/>
+		<property name="duration" column="DURATION"/>
+		<property name="isPublished" column="ISPUBLISHED"/>
+		<property name="deleted" column="DELETED"/>
+		<property name="Total_Marks_Check" column="TOTALMARKS"/>
+		<property name="createdBy" column="CREATEDBY"/>
+		<property name="dateCreated" column="DATECREATED"/>
+		<property name="modifiedBy" column="MODIFIEDBY"/>
+		<property name="dateModified" column="DATEMODIFIED"/>
+	</class>
+</hibernate-mapping>

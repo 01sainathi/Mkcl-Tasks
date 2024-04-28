@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.app.models">
+	<class name="ExamEvent" table="EXAMEVENT">
+		<id name="examEventID" column="EXAMEVENTID">
+			<generator class="identity"/>
+		</id>
+		<property name="clientID" column="CLIENTID"/>
+		<property name="defaultLanguageID" column="DEFAULTLANGUAGEID"/>
+		<property name="examEventCode" column="EXAMEVENTCODE"/>
+		<property name="name" column="NAME"/>
+		<property name="startDate" column="STARTDATE"/>
+		<property name="endDate" column="ENDDATE"/>
+		<property name="isActiveEvent" column="ISACTIVEEVENT"/>
+		<property name="createdBy" column="CREATEDBY"/>
+		<property name="dateCreated" column="DATECREATED"/>
+		<property name="modifiedBy" column="MODIFIEDBY"/>
+		<property name="dateModified" column="DATEMODIFIED"/>
+		<property name="eventCategory" column="EVENTCATEGORY"/>
+		<property name="eventType" column="EVENTTYPE"/>
+		<property name="examEventState" column="EXAMEVENTSTATE"/>
+	</class>
+</hibernate-mapping>

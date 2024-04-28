@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.app.models">
+	
+	<class name="SchedulePaperAssociation" table="SCHEDULEPAPERASSOCIATION">
+		<id name="schedulePaperAssociationID" column="SCHEDULEPAPERASSOCIATIONID">
+			<generator class="identity"/>
+		</id>
+		<property name="fkExamEventID" column="FKEXAMEVENTID"/>
+		<property name="fkScheduleID" column="FKSCHEDULEID"/>
+		<property name="fkPaperID" column="FKPAPERID"/>
+		<property name="createdBy" column="CREATEDBY"/>
+		<property name="dateCreated" column="DATECREATED"/>
+		<property name="modifiedBy" column="MODIFIEDBY"/>
+		<property name="dateModified" column="DATEMODIFIED"/>
+		<property name="isActive" column="ISACTIVE"/>
+	</class>
+</hibernate-mapping>
