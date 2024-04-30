@@ -59,8 +59,6 @@ public class ExamEventPaperDetailsController {
 		session.removeAttribute("papers");
 		session.setAttribute("papers", papers);
 		
-		System.out.println(resp);
-		
 		//called by ajax request this is used to alert in the browser
 		return "Success";
 	}
@@ -108,6 +106,7 @@ public class ExamEventPaperDetailsController {
 		
 		HttpSession session = req.getSession();
 		Long eeId = ((ExamEvent)session.getAttribute("examEvent")).getExamEventID();
+		System.out.println("----------------------"+list);
 		eServ.deleteByEEIdPId(list, eeId);
 		return "Success check db";
 	}

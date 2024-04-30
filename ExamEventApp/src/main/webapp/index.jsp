@@ -23,40 +23,43 @@
         </div>
         <div>
         <h3>Add new event</h3></div>
-        <form class="form-control" action="submit">
+        <form onSubmit="return validate()" class="form-control" action="submit">
             <div class="container">
                 <table class="table">
                     <tr>
-                        <td>Exam Event Name</td>
-                        <td><input type="text" name="name" id="ename"></td>
+                        <td><b class="text-success">Exam Event Name</b></td>
+                        <td><input type="text" name="name" id="ename" class="form-control" required></td>
                     </tr>
                     <tr>
-                        <td>Exam Event Code</td>
-                        <td><input type="text" name="code" id="ecode"></td>
+                        <td><b class="text-success">Exam Event Code</b></td>
+                        <td><input type="text" name="code" id="ecode" class="form-control"></td>
                     </tr>
                     <tr>
-                        <td>Default Language</td>
+                        <td><b class="text-success">Default Language</b></td>
                         <td>
-                            <select name="language" id="lang">
+                            <select name="language" id="lang" class="form-control">
                                 
                             </select>
                         </td>
                     </tr>
                     <tr>
-                        <td>Start Date</td>
-                        <td><input type="datetime-local" name="start_date" id="sdate"></td>
+                        <td><b class="text-success">Start Date</b></td>
+                        <td><input type="datetime-local" name="start_date" id="sdate" class="form-control"></td>
                     </tr>
                     <tr>
-                        <td>End Date</td>
-                        <td><input type="datetime-local" name="end_date" id="edate"></td>
+                        <td><b class="text-success">End Date</b></td>
+                        <td><input type="datetime-local" name="end_date" id="edate" class="form-control"></td>
                     </tr>
                     <tr>
                         <td><input class="btn btn-primary" type="submit" value="Submit"></td>
-                        <td><a href="AddPaper.jsp" class="btn btn-primary">Proceed</a></td>
+                       
                     </tr>
                 </table>
             </div>
         </form>
+        <div>
+        	<b id="error" class="text-success">All is well</b>
+        </div>
     </div>
     <div class="container">
     	<h3>Proceed with existing event</h3>
@@ -99,7 +102,7 @@
                     console.log(data);
 
                     let langs = data.split(",");
-                    let html = '<option value="none">none</option>';
+                    let html = '<option value="">none</option>';
                     for(let i=0; i<langs.length; i++){
                         let str = langs[i].trim();
                         let line = '<option value="'+str+'">'+str+'</option>'
@@ -113,6 +116,40 @@
 
             helper.open("GET", "http://localhost:8080/ExamEventApp/langs");
             helper.send();
+        }
+
+        function validate(){
+
+			let n = document.getElementById("ename");
+			let c = document.getElementById("ecode");
+			let l = document.getElementById("lang");
+			let s = document.getElementById("sdate");
+			let e = document.getElementById("edate");
+			let error = document.getElementById("error");
+			
+			if(n.value=="" || c.value=="" || l.value=="" || s.value=="" || e.value==""){
+				error.classList.remove("text-success");
+				error.classList.add("text-danger");
+				error.innerText = "All fields are mandatory";
+				return false;
+			}
+
+			
+			var DateStart = new Date(s.value);
+			var DateEnd = new Date(e.value);
+			if (DateEnd < DateStart) {
+				error.classList.remove("text-success");
+				error.classList.add("text-danger");
+				error.innerText = "End date cannot be less than Start date.";
+		    	return false;
+			}
+			if(DateStart <= new Date()){
+				error.classList.remove("text-success");
+				error.classList.add("text-danger");
+				error.innerText = "Event Cannot start prior today";
+				return false;
+			}
+			return true;
         }
     </script>
 </html>

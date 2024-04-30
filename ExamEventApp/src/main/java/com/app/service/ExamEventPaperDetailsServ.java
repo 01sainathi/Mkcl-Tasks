@@ -37,6 +37,7 @@ public class ExamEventPaperDetailsServ {
 		
 		try {
 			eDao.save(listOfPapers);
+			System.out.println("to save ----------------->"+listOfPapers);
 			return "__________Papers successfully added...";
 		} catch (DALException e) {
 			// TODO Auto-generated catch block
@@ -72,7 +73,7 @@ public class ExamEventPaperDetailsServ {
 				e.printStackTrace();
 			}
 		}
-
+		System.out.println("To remove--------------------->"+pIds);
 	}
 
 	

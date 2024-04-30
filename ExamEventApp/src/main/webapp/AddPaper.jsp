@@ -70,7 +70,7 @@
         </div>
         <div class="table-responsive">
             
-            <table class="table table-striped">
+            <table class="table table-hover">
                 <thead>
                     <th>Paper Code </th>
                     <th>Paper Name </th>
@@ -96,7 +96,6 @@
             </div>
         </div>
     </div>
-    
         <div id="mod" class="modal" tabindex="-1"> 
             <div class="modal-dialog"> 
                 <div class="modal-content"> 
@@ -134,7 +133,7 @@
                 </div> 
             </div> 
         </div>
-
+		
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
@@ -153,13 +152,6 @@
                     console.log(data);
                    
                     for(let i=0; i<data.length; i++){
-
-                       	/* let id=i+1;
-     					html += '<tr>';
-     					html += '<td>'+id+'</td>';
-     					html += '<td>'+data[i].name+'</td>';
-     					html += '<td><button id="'+data[i].name+'" class="btn btn-danger" onclick="remove(this)">remove</button></td>';
-     					html += '</tr>'; */
 
                     	let obj = {"id": data[i].paperID, 
     							"name": data[i].name};
@@ -182,7 +174,6 @@
                         let arr = data.split(",");*/
                         let data = JSON.parse(result);
                         console.log(data);
-                        let id=0;
                         let html = ``;
                         for(let i=0; i<data.length; i++){
                         	html += '<tr id='+data[i].paperID+'>';
@@ -260,7 +251,7 @@
 					html += '<tr>';
 					html += '<td>'+id+'</td>';
 					html += '<td>'+list[i].name+'</td>';
-					html += '<td><button id="'+list[i].name+'" class="btn btn-danger" onclick="remove(this)">remove</button></td>';
+					html += '<td><button id="'+list[i].id+'" class="btn btn-danger" onclick="remove(this)">remove</button></td>';
 					html += '</tr>';
                 }
                 a.innerHTML = html;
@@ -268,16 +259,20 @@
 
 			
             function remove(removedEle){
-				
+            	toRemove.push(removedEle.id);
 				for(let i=0; i<list.length; i++){
-					if(list[i].name === removedEle.id){
+					if(list[i].id === removedEle.id){
 
-						$('#'+list[i].id).show();
-						toRemove.push(list[i].id);
+						$('#'+list[i].id).show(); 
 						let checkbox = document.getElementsByClassName("checkbox");
 						
 						checkbox[list[i].id-1].checked = false;
 						list.splice(i,1);
+					}
+				}
+				for(let i=0; i<toAdd.length; i++){
+					if(toAdd[i] == removedEle.id){
+						toAdd.splice(i,1);
 					}
 				}
 				document.getElementById("counter").innerHTML = list.length;
@@ -296,6 +291,7 @@
 				console.log("To Add");
 				console.log(toAdd);
 
+				//deleting papers marked for deletion (which are in the toRemove[])
 				$.ajax({
 					method: 'POST',
 					url: 'http://localhost:8080/ExamEventApp/ExamEventPaperDetails/delete',
@@ -303,23 +299,27 @@
 					data: toRemove.toString(),
 					success: function(result){
 						console.log(result);
+						//saving paper which are in the toAdd[]
+						$.ajax({
+							method: 'POST',
+							url: 'http://localhost:8080/ExamEventApp/ExamEventPaperDetails/save',
+							contentType: 'application/json',
+							data: toAdd.toString(),
+							success: function(result){
+								toAdd = [0];
+								alert("Papers added successfully");
+								location.reload();
+							},
+							error: function(error){
+								console.log(error)
+							}
+						})  
 					},
 					error: function(error){
 						console.log(error)
 					}		
-				})
-				$.ajax({
-					method: 'POST',
-					url: 'http://localhost:8080/ExamEventApp/ExamEventPaperDetails/save',
-					contentType: 'application/json',
-					data: toAdd.toString(),
-					success: function(result){
-						alert("Papers added successfully");
-					},
-					error: function(error){
-						console.log(error)
-					}
 				}) 
+				
             }
             
     </script>

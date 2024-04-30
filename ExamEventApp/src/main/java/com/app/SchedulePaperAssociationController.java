@@ -24,4 +24,6 @@ public class SchedulePaperAssociationController {
 		spaServ.save(eeId, sid, pid);
 		return "/ScheduleTest";
 	}
+	
+	
 }

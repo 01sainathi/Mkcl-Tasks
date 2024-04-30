@@ -14,14 +14,14 @@
 <body>
     <div class="container my-4">
         <h3>Schedule Test</h3>
-        <form action="/ExamEventApp/SchedulePaperAssociation/save" class="form-control">
+        <form onSubmit="return validate()" action="/ExamEventApp/SchedulePaperAssociation/save" class="form-control">
         	<div class="row my-4">
 	            <div class="col-md-4">
 	                Exam Event *
 	            </div>
 	            <div class="col-md-8">
 	                <select name="event" id="event" class="form-select" onchange="loadSchedules(this)">
-	                    <option value="none">Select Exam Event</option>
+	                    <option value="">Select Exam Event</option>
 	                    <jsp:useBean id="hServ" class="com.app.service.HomeService"/>
 	                    <c:set var="events" value="${hServ.findAll() }"/>
 	                    <c:forEach var="e" items="${events }">
@@ -41,21 +41,11 @@
 	                </select>
 	            </div>
 	        </div>
-	            <div class="row">
-	                <h6 id="curr_date">
-	                    Date: 
-	                </h6>
-	            </div>
-	            <div class="alert alert-success">
-	                <h6>You can schedule unlimited paper</h6>
-	            </div>
-	
 	            <table class="table table-bordered">
 	                <thead>
 	                    <tr>
 	                        <th>Display Category</th>
 	                        <th>Paper</th>
-	                        <th>Add More</th>
 	                    </tr>
 	                </thead>
 	                <tbody>
@@ -66,35 +56,42 @@
 	                                <option value="">none</option>
 	                            </select>
 	                        </td>
-	                        <td>
-	                            <button class="btn btn-success rounded-pill px-4">Add More</button>
-	                        </td>
 	                    </tr>
 	                </tbody>
 	            </table>
+	            <div id="error" class="alert alert-success">
+	                <h6>You can schedule paper</h6>
+	            </div>
 	            <div class="d-flex justify-content-center">
 	                <input type="submit" class="btn btn-success rounded-pill px-4" value="Schedule"/>
 	        	</div>
         </form>
-        <%-- <div class="my-2">
-            <h6>Already Defined Schedule</h6>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Display Category</th>
-                        <th>Paper</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Date: Ape 12, 2024, 12:34 PM - Dec 30, 2024, 4:00 PM</td>
-                        <td>English</td>
-                        <td>${examEvent.name }</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div> --%>
+        <table class="table table-hover">
+        	<thead>
+        		<tr>
+        			<th>Sr. no</th>
+        			<th>Exam Event</th>
+        			<th>Paper Name</th>
+        			<th>Start Date</th>
+        			<th>End Date</th>
+        		</tr>
+        	</thead>
+        	<tbody>
+        		<jsp:useBean id="pserv" class="com.app.service.PaperService"/>
+        		<c:set var="papers" value="${pserv.getScheduledPapers()}"/>
+        		<c:set var="i" value="1"/>
+        		<c:forEach var="p" items="${papers }">
+        			<tr>
+        				<td>${i}</td>
+        				<td>${p.getEname()}</td>
+        				<td>${p.getPname()}</td>
+        				<td>${p.getSdate()}</td>
+        				<td>${p.getEdate()}</td>
+        			</tr>
+        			<c:set var="i" value="${i+1}"/>
+        		</c:forEach>
+        	</tbody>
+        </table>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
@@ -125,8 +122,6 @@
 					document.getElementById("dates").innerHTML = html;
 				}
 			});
-			 
-			/* loadPapers(selectedEvent.value); */
 		}
 
 		function loadPapers(schedule){
@@ -151,15 +146,21 @@
 			
 		}
 
-		function changeDate(selectedDate){
-			console.log("inside changeDate");
-			let ele = document.getElementById("curr_date");
+		function validate(){
+			let e = $("#event").val();
+			let d = $("#dates").val();
+			let p = $("#papers").val();
+			let error = document.getElementById("error");
 			
-			for(let i=0; i<list.length; i++){
-				if(list[i].id == selectedDate.value){
-					ele.innerText = "Date: "+list[i].date;
-				}
-			}	
+			if(e=="" || d=="" || p==""){
+				error.classList.remove("alert-success");
+				error.classList.add("alert-danger");
+				error.innerHTML = "<h6>All fields are mandatory</h6>";
+				return false;
+			}
+			error.classList.remove("alert-danger");
+			error.classList.add("alert-success");
+			error.innerHTML = "<h6>All is well</h6>";
 		}
     </script>
 </body>

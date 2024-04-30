@@ -39,11 +39,12 @@
                 </div>
             </div>
         </div>
-        <form action="ExamEventPaperDetails/update">
+        <form onSubmit="return validate()" action="ExamEventPaperDetails/update">
             <div class="row my-2">
                 <div class="col-md-2">Select Paper *</div>
                 <div class="col-md-10">
                     <select class="form-select" name="papers" id="papers">
+                    	<option value="">none</option>
                     	/* adding the papers of this event in the dropdown*/
                         <jsp:useBean id="pServ" class="com.app.service.PaperService"></jsp:useBean>
                         <c:set var="papers" value="${pServ.getSomePapers(examEvent.examEventID) }"/>
@@ -63,6 +64,7 @@
                 </div>
                 <div class="col-md-8">
                     <select class="form-select" name="examType" id="examType">
+                    	<option value="">none</option>
                         <option value="Main">Main</option>
                         <option value="Practice">Practice</option>
                     </select>
@@ -77,18 +79,18 @@
             <div class="row my-2">
                 <div class="col-md-4">Identical Question Paper to all Candidate</div>
                 <div class="col-md-8">
-                    <input type="radio" name="iq" id="yes" value="true">
+                    <input type="radio" name="iq" id="iq1" value="true">
                     <label for="yes">Yes</label>
-                    <input type="radio" name="iq" id="no" value="false">
+                    <input type="radio" name="iq" id="iq2" value="false">
                     <label for="no">No</label>
                 </div>
             </div>
             <div class="row my-2">
                 <div class="col-md-4">Identical Item Sequence to all Candidate</div>
                 <div class="col-md-8">
-                    <input type="radio" name="is" id="yes" value="true">
+                    <input type="radio" name="is" id="is1" value="true">
                     <label for="yes">Yes(No Randomization)</label>
-                    <input type="radio" name="is" id="no" value="false">
+                    <input type="radio" name="is" id="is2" value="false">
                     <label for="no">No(Randomization)</label>
                 </div>
             </div>
@@ -98,9 +100,9 @@
             <div class="row my-2">
                 <div class="col-md-4">Option Randomization</div>
                 <div class="col-md-8">
-                    <input type="radio" name="or" id="yes" value="true">
+                    <input type="radio" name="or" id="or1" value="true">
                     <label for="yes">Yes</label>
-                    <input type="radio" name="or" id="no" value="false">
+                    <input type="radio" name="or" id="or2" value="false">
                     <label for="no">No</label>
                 </div>
             </div>
@@ -110,47 +112,50 @@
             <div class="row my-2">
                 <div class="col-md-4">Disable Pallet Navigation</div>
                 <div class="col-md-8">
-                    <input type="radio" name="pn" id="yes" value="true">
+                    <input type="radio" name="pn" id="pn1" value="true">
                     <label for="yes">Yes</label>
-                    <input type="radio" name="pn" id="no" value="false">
+                    <input type="radio" name="pn" id="pn2" value="false">
                     <label for="no">No</label>
                 </div>
             </div>
             <div class="row my-2">
                 <div class="col-md-4">Skip Question</div>
                 <div class="col-md-8">
-                    <input type="radio" name="sq" id="yes" value="true">
+                    <input type="radio" name="sq" id="sq1" value="true">
                     <label for="yes">Yes</label>
-                    <input type="radio" name="sq" id="no" value="false">
+                    <input type="radio" name="sq" id="sq2" value="false">
                     <label for="no">No</label>
                 </div>
             </div>
             <div class="row my-2">
                 <div class="col-md-4">Answer Option Can be changed after attempt</div>
                 <div class="col-md-8">
-                    <input type="radio" name="ao" id="yes" value="true">
+                    <input type="radio" name="ao" id="ao1" value="true">
                     <label for="yes">Yes</label>
-                    <input type="radio" name="ao" id="no" value="false">
+                    <input type="radio" name="ao" id="ao2" value="false">
                     <label for="no">No</label>
                 </div>
             </div>
             <div class="row my-2">
                 <div class="col-md-4">Show Reset Answer Option</div>
                 <div class="col-md-8">
-                    <input type="radio" name="sr" id="yes" value="true">
+                    <input type="radio" name="sr" id="sr1" value="true">
                     <label for="yes">Yes</label>
-                    <input type="radio" name="sr" id="no" value="false">
+                    <input type="radio" name="sr" id="sr2" value="false">
                     <label for="no">No</label>
                 </div>
             </div>
             <div class="row my-2">
                 <div class="col-md-4">Show Notepad</div>
                 <div class="col-md-8">
-                    <input type="radio" name="sn" id="yes" value="true">
+                    <input type="radio" name="sn" id="sn1" value="true">
                     <label for="yes">Yes</label>
-                    <input type="radio" name="sn" id="no" value="false">
+                    <input type="radio" name="sn" id="sn2" value="false">
                     <label for="no">No</label>
                 </div>
+            </div>
+            <div class="row">
+            	<b id="error" class="text-success">All is well</b>
             </div>
             <div class="row my-4">
                 <div class="col-md-4"></div>
@@ -164,5 +169,67 @@
 
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+		function validate(){
+
+			let p = $("#papers").val();
+			let e = $("#examType").val();
+			let a = $("#attempts").val();
+
+			if(p=="" || e=="" || a==""){
+				
+				/* $("#error").text("select paper, exam type and attempts"); */
+				
+				let error = document.getElementById("error");
+				error.innerText = "select paper, exam type and attempts";
+				error.classList.remove("text-success");
+				error.classList.add("text-danger");
+				return false;
+			}
+			let iq = "";
+			if($("#iq1").is(":checked"))iq=$("#iq1").val();
+			if($("#iq2").is(":checked"))iq=$("#iq2").val();
+
+			let is = "";
+			if($("#is1").is(":checked"))is=$("#is1").val();
+			if($("#is2").is(":checked"))is=$("#is2").val();
+			
+			let or = "";
+			if($("#or1").is(":checked"))or=$("#or1").val();
+			if($("#or2").is(":checked"))or=$("#or2").val();
+
+			let pn = "";
+			if($("#pn1").is(":checked"))pn=$("#pn1").val();
+			if($("#pn2").is(":checked"))pn=$("#pn2").val();
+
+			let sq = "";
+			if($("#sq1").is(":checked"))sq=$("#sq1").val();
+			if($("#sq2").is(":checked"))sq=$("#sq2").val();
+
+			let ao = "";
+			if($("#ao1").is(":checked"))ao=$("#ao1").val();
+			if($("#ao2").is(":checked"))ao=$("#ao2").val();
+
+			let sr = "";
+			if($("#sr1").is(":checked"))sr=$("#sr1").val();
+			if($("#sr2").is(":checked"))sr=$("#sr2").val();
+
+			let sn = "";
+			if($("#sn1").is(":checked"))sn=$("#sn1").val();
+			if($("#sn2").is(":checked"))sn=$("#sn2").val();
+			
+
+			if(iq=="" || is=="" || or=="" || pn=="" || sq=="" || ao=="" || sr=="" || sn==""){
+				let error = document.getElementById("error");
+				error.innerText = "All fields are mandatory";
+				error.classList.remove("text-success");
+				error.classList.add("text-danger");
+				return false;
+			}
+			
+			
+			return true;
+		}
+    </script>
 </body>
 </html>

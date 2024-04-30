@@ -38,13 +38,14 @@
                 </div>
             </div>
         </div>
-        <form action="ScheduleMaster/save" class="form-control">
+        <form onSubmit="return validate()" action="ScheduleMaster/save" class="form-control">
             <div class="row my-2">
                 <div class="col-md-4">
                     Schedule Type *
                 </div>
                 <div class="col-md-8">
                     <select class="form-select" name="schedule" id="schedule">
+                    	<option value="">none</option>
                     	<option value="CUSTOM">CUSTOM</option>
                         <option value="DAY">DAY</option>
                         <option value="WEEK">WEEK</option>          
@@ -68,14 +69,17 @@
             <div class="row my-2">
                 <div class="col-md-4">Start Date *</div>
                 <div class="col-md-4">
-                    <input class="form-control" type="datetime-local" name="startDate" id="sDate">
+                    <input class="form-control" type="datetime-local" name="startDate" id="sdate">
                 </div>
             </div>
             <div class="row my-2">
                 <div class="col-md-4">End Date *</div>
                 <div class="col-md-4">
-                    <input class="form-control" type="datetime-local" name="endDate" id="eDate">
+                    <input class="form-control" type="datetime-local" name="endDate" id="edate">
                 </div>
+            </div>
+            <div class="row ">
+            	<b id="error" class="text-success">All is well</b>
             </div>
             <div class="row my-2">
                 <div class="col-md-4"></div>
@@ -97,7 +101,7 @@
         <table class="table table-responsive">
             <thead>
                 <tr>
-                    <th>Scdhedule Type</th>
+                    <th>Schedule Type</th>
                     <th>Starting From</th>
                     <th>Ending On</th>
                     <th>No. of Schedule(s) Created</th>
@@ -133,5 +137,38 @@
             </tbody>
         </table>
     </div>
+    <script>
+		function validate(){
+			let schedule = document.getElementById("schedule");
+			let papers = document.getElementById("nop");
+			let s = document.getElementById("sdate");
+			let e = document.getElementById("edate");
+			let error = document.getElementById("error");
+			
+			if(schedule.value=="" || papers.value=="" || s.value=="" || e.value==""){
+				error.classList.remove("text-success");
+				error.classList.add("text-danger");
+				error.innerText = "All fields are mandatory";
+				return false;
+			}
+
+			
+			var DateStart = new Date(s.value);
+			var DateEnd = new Date(e.value);
+			if (DateEnd < DateStart) {
+				error.classList.remove("text-success");
+				error.classList.add("text-danger");
+				error.innerText = "End date cannot be less than Start date.";
+		    	return false;
+			}
+			if(DateStart <= new Date()){
+				error.classList.remove("text-success");
+				error.classList.add("text-danger");
+				error.innerText = "Event Cannot start prior today";
+				return false;
+			}
+			return true;
+		}
+    </script>
 </body>
 </html>

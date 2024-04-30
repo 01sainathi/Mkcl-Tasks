@@ -163,6 +163,7 @@ function loadData(){
                 html += '<td>'+papers[i].name+'</td>';
                 html += '<td>000</td>';
                 html += '<td>000</td>';
+                html += '</tr>';
                 counter++;
             }
 

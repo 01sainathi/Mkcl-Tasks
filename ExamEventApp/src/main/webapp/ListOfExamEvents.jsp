@@ -17,7 +17,7 @@
     <div class="container">
         <div class="d-flex justify-content-between my-4">
             <h3>Manage Exam Event</h3>
-            <a href="http://localhost:8080/ExamEventApp/index.jsp" class="btn btn-success rounded-pill px-4">Add Exam Event</a>
+            <a href="http://localhost:8080/ExamEventApp/ScheduleTest.jsp" class="btn btn-success rounded-pill px-4">Schedule Test</a>
         </div>
 
         <table class="table table-responsive">
